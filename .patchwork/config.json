@@ -1,0 +1,8 @@
+{
+  "upstream": {
+    "remote": "upstream",
+    "branch": "dev"
+  },
+  "stableBranch": "dev",
+  "remote": "origin"
+}
