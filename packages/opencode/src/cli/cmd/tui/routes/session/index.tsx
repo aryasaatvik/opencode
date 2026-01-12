@@ -1679,14 +1679,15 @@ function Task(props: ToolProps<typeof TaskTool>) {
   const { navigate } = useRoute()
   const local = useLocal()
 
+  const agentType = createMemo(() => props.input.subagent_type ?? props.metadata.subagent_type ?? "unknown")
   const current = createMemo(() => props.metadata.summary?.findLast((x) => x.state.status !== "pending"))
-  const color = createMemo(() => local.agent.color(props.input.subagent_type ?? "unknown"))
+  const color = createMemo(() => local.agent.color(agentType()))
 
   return (
     <Switch>
       <Match when={props.metadata.summary?.length}>
         <BlockTool
-          title={"# " + Locale.titlecase(props.input.subagent_type ?? "unknown") + " Task"}
+          title={"# " + Locale.titlecase(agentType()) + " Task"}
           onClick={
             props.metadata.sessionId
               ? () => navigate({ type: "session", sessionID: props.metadata.sessionId! })
@@ -1696,7 +1697,7 @@ function Task(props: ToolProps<typeof TaskTool>) {
         >
           <box>
             <text style={{ fg: theme.textMuted }}>
-              {props.input.description} ({props.metadata.summary?.length} toolcalls)
+              {props.input.description ?? props.metadata.description} ({props.metadata.summary?.length} toolcalls)
             </text>
             <Show when={current()}>
               <text style={{ fg: current()!.state.status === "error" ? theme.error : theme.textMuted }}>
@@ -1716,11 +1717,11 @@ function Task(props: ToolProps<typeof TaskTool>) {
           icon="◉"
           iconColor={color()}
           pending="Delegating..."
-          complete={props.input.subagent_type ?? props.input.description}
+          complete={props.input.subagent_type ?? props.metadata.subagent_type ?? props.input.description ?? props.metadata.description}
           part={props.part}
         >
-          <span style={{ fg: theme.text }}>{Locale.titlecase(props.input.subagent_type ?? "unknown")}</span> Task "
-          {props.input.description}"
+          <span style={{ fg: theme.text }}>{Locale.titlecase(agentType())}</span> Task "
+          {props.input.description ?? props.metadata.description}"
         </InlineTool>
       </Match>
     </Switch>
