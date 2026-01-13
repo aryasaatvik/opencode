@@ -10,7 +10,7 @@ import type {
   Auth,
   Config,
   OpencodeClient,
-} from "@opencode-ai/sdk/v2"
+} from "@opencoder-ai/sdk/v2"
 
 import type { BunShell } from "./shell"
 import { type ToolDefinition } from "./tool"
@@ -172,7 +172,10 @@ export interface Hooks {
     input: { sessionID: string; agent: string; model: Model; provider: ProviderContext; message: UserMessage },
     output: { temperature: number; topP: number; topK: number; options: Record<string, any> },
   ) => Promise<void>
-  "permission.ask"?: (input: PermissionRequest, output: { status: "ask" | "deny" | "allow" | "reject" }) => Promise<void>
+  "permission.ask"?: (
+    input: PermissionRequest,
+    output: { status: "ask" | "deny" | "allow" | "reject" },
+  ) => Promise<void>
   "tool.execute.before"?: (
     input: { tool: string; sessionID: string; callID: string },
     output: { args: any },

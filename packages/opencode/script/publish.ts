@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import { $ } from "bun"
 import pkg from "../package.json"
-import { Script } from "@opencode-ai/script"
+import { Script } from "@opencoder-ai/script"
 import { fileURLToPath } from "url"
 
 const dir = fileURLToPath(new URL("..", import.meta.url))
@@ -23,7 +23,7 @@ await Bun.file(`./dist/${pkg.name}/package.json`).write(
     {
       name: pkg.name + "-ai",
       bin: {
-        [pkg.name]: `./bin/${pkg.name}`,
+        opencode: `./bin/opencode`,
       },
       scripts: {
         postinstall: "bun ./postinstall.mjs || node ./postinstall.mjs",
@@ -62,9 +62,10 @@ if (!Script.preview) {
     }
   }
 
-  const image = "ghcr.io/anomalyco/opencode"
-  const platforms = "linux/amd64,linux/arm64"
-  const tags = [`${image}:${Script.version}`, `${image}:latest`]
-  const tagFlags = tags.flatMap((t) => ["-t", t])
-  await $`docker buildx build --platform ${platforms} ${tagFlags} --push .`
+  // Docker not needed for fork
+  // const image = "ghcr.io/anomalyco/opencode"
+  // const platforms = "linux/amd64,linux/arm64"
+  // const tags = [`${image}:${Script.version}`, `${image}:latest`]
+  // const tagFlags = tags.flatMap((t) => ["-t", t])
+  // await $`docker buildx build --platform ${platforms} ${tagFlags} --push .`
 }

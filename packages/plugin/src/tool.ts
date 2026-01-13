@@ -1,5 +1,5 @@
 import { z } from "zod"
-import type { FilePart } from "@opencode-ai/sdk"
+import type { FilePart } from "@opencoder-ai/sdk"
 
 export type ToolContext = {
   sessionID: string

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { Script } from "@opencode-ai/script"
+import { Script } from "@opencoder-ai/script"
 import { $ } from "bun"
 
 if (!Script.preview) {
@@ -9,6 +9,7 @@ if (!Script.preview) {
 
 await $`bun install`
 
-await $`gh release download --pattern "opencode-linux-*64.tar.gz" --pattern "opencode-darwin-*64.zip" -D dist`
+await $`gh release download --pattern "opencoder-linux-*64.tar.gz" --pattern "opencoder-darwin-*64.zip" -D dist`
 
-await import(`../packages/opencode/script/publish-registries.ts`)
+// AUR/Homebrew not needed for fork
+// await import(`../packages/opencode/script/publish-registries.ts`)

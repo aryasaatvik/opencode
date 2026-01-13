@@ -1,15 +1,15 @@
-import type { PluginInput, Hooks } from "@opencode-ai/plugin"
-import type { Plugin as PluginFn } from "@opencode-ai/plugin"
+import type { PluginInput, Hooks } from "@opencoder-ai/plugin"
+import type { Plugin as PluginFn } from "@opencoder-ai/plugin"
 import { Config } from "../config/config"
 import { Bus } from "../bus"
 import { Log } from "../util/log"
-import { createOpencodeClient } from "@opencode-ai/sdk/v2"
+import { createOpencodeClient } from "@opencoder-ai/sdk/v2"
 import { BunProc } from "../bun"
 import { Instance } from "../project/instance"
 import { Flag } from "../flag/flag"
 import { CodexAuthPlugin } from "./codex"
 import { Session } from "../session"
-import { NamedError } from "@opencode-ai/util/error"
+import { NamedError } from "@opencoder-ai/util/error"
 
 export namespace Plugin {
   const log = Log.create({ service: "plugin" })

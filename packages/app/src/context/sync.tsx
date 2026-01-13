@@ -1,11 +1,11 @@
 import { batch, createMemo } from "solid-js"
 import { createStore, produce, reconcile } from "solid-js/store"
-import { Binary } from "@opencode-ai/util/binary"
-import { retry } from "@opencode-ai/util/retry"
-import { createSimpleContext } from "@opencode-ai/ui/context"
+import { Binary } from "@opencoder-ai/util/binary"
+import { retry } from "@opencoder-ai/util/retry"
+import { createSimpleContext } from "@opencoder-ai/ui/context"
 import { useGlobalSync } from "./global-sync"
 import { useSDK } from "./sdk"
-import type { Message, Part } from "@opencode-ai/sdk/v2/client"
+import type { Message, Part } from "@opencoder-ai/sdk/v2/client"
 
 export const { use: useSync, provider: SyncProvider } = createSimpleContext({
   name: "Sync",
@@ -196,7 +196,7 @@ export const { use: useSync, provider: SyncProvider } = createSimpleContext({
           const pending = inflightTodo.get(sessionID)
           if (pending) return pending
 
-          const promise = retry(() => sdk.client.session.todo({ sessionID }))
+          const promise = retry(() => sdk.client.session.todo.list({ sessionID }))
             .then((todo) => {
               setStore("todo", sessionID, reconcile(todo.data ?? [], { key: "id" }))
             })

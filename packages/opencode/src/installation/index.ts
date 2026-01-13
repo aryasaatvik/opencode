@@ -2,7 +2,7 @@ import { BusEvent } from "@/bus/bus-event"
 import path from "path"
 import { $ } from "bun"
 import z from "zod"
-import { NamedError } from "@opencode-ai/util/error"
+import { NamedError } from "@opencoder-ai/util/error"
 import { Log } from "../util/log"
 import { iife } from "@/util/iife"
 import { Flag } from "../flag/flag"
@@ -95,7 +95,7 @@ export namespace Installation {
 
     for (const check of checks) {
       const output = await check.command()
-      if (output.includes(check.name === "brew" ? "opencode" : "opencode-ai")) {
+      if (output.includes(check.name === "brew" ? "opencode" : "opencoder-ai")) {
         return check.name
       }
     }
@@ -122,19 +122,19 @@ export namespace Installation {
     let cmd
     switch (method) {
       case "curl":
-        cmd = $`curl -fsSL https://opencode.ai/install | bash`.env({
+        cmd = $`curl -fsSL https://raw.githubusercontent.com/AryaLabsHQ/opencoder/dev/install | bash`.env({
           ...process.env,
           VERSION: target,
         })
         break
       case "npm":
-        cmd = $`npm install -g opencode-ai@${target}`
+        cmd = $`npm install -g opencoder-ai@${target}`
         break
       case "pnpm":
-        cmd = $`pnpm install -g opencode-ai@${target}`
+        cmd = $`pnpm install -g opencoder-ai@${target}`
         break
       case "bun":
-        cmd = $`bun install -g opencode-ai@${target}`
+        cmd = $`bun install -g opencoder-ai@${target}`
         break
       case "brew": {
         const formula = await getBrewFormula()
@@ -187,7 +187,7 @@ export namespace Installation {
         return reg.endsWith("/") ? reg.slice(0, -1) : reg
       })
       const channel = CHANNEL
-      return fetch(`${registry}/opencode-ai/${channel}`)
+      return fetch(`${registry}/opencoder-ai/${channel}`)
         .then((res) => {
           if (!res.ok) throw new Error(res.statusText)
           return res.json()
@@ -195,7 +195,7 @@ export namespace Installation {
         .then((data: any) => data.version)
     }
 
-    return fetch("https://api.github.com/repos/anomalyco/opencode/releases/latest")
+    return fetch("https://api.github.com/repos/AryaLabsHQ/opencoder/releases/latest")
       .then((res) => {
         if (!res.ok) throw new Error(res.statusText)
         return res.json()
